@@ -1,0 +1,695 @@
+/* 1. 기본 설정 및 폰트 */
+body {
+    font-family: 'Malgun Gothic', 'Dotum', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    margin: 20px auto; 
+    max-width: 210mm; 
+    line-height: 15px; 
+    font-size: 13px;
+}
+
+.container {
+    width: 100%;
+    max-width: 210mm; 
+    background-color: white;
+    padding: 20px; 
+    padding-bottom: 100px; /* reserve space for bottom action toolbar */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; 
+    position: relative; 
+}
+
+header {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.header-center {
+    width: 100%;
+    text-align: center;
+    order: -1; 
+    margin-bottom: 10px;
+}
+
+/* 2. 현장/날짜 좌우 정렬 CSS */
+.header-top-left {
+    width: 100%;
+    margin-top: -10px; 
+    padding: 0;
+    line-height: 15px; 
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-top-left label {
+    display: inline-block; 
+    margin: 0;
+}
+#field-site {
+    text-align: left;
+}
+#field-date {
+    text-align: right;
+}
+
+/* 3, 4. 수신자/업체 정보 박스 스타일 */
+.info-boxes-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.info-box-style {
+    width: 48%; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    line-height: 15px; 
+    font-size: 13px; 
+}
+/* 수신자/공급자 정보 제목 스타일 통일 */
+.info-box-style h3 {
+    font-size: 13px;
+    line-height: 15px;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
+/* 수신자/공급자 정보 문단 스타일 통일 */
+.recipient-info p, .supplier-info p {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    line-height: 15px;
+}
+.recipient-info p:last-child, .supplier-info p:last-child {
+    margin-bottom: 0;
+}
+/* 수신자 정보 입력 필드 스타일 통일 */
+.recipient-info input[type="text"] {
+    font-size: 13px;
+    line-height: 15px;
+    font-family: inherit;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    width: calc(100% - 80px);
+}
+
+/* --- 합계 요약 --- */
+.summary-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    margin-bottom: 10px;
+}
+
+.vat-option {
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 15px;
+    padding: 3px 0;
+}
+.vat-option label {
+    margin-right: 15px;
+    font-weight: normal;
+}
+
+.summary-text.single-line-total {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 15px; 
+    margin: 0; 
+}
+
+/* --- 날짜별 그룹 및 견적 테이블 --- */
+.date-group {
+    border: 1px solid #ddd;
+    margin-top: 10px; 
+    margin-bottom: 10px; 
+    box-sizing: border-box;
+}
+.date-header {
+    background-color: #f0f0f0;
+    padding: 5px 8px;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    margin: 0;
+    line-height: 15px;
+}
+.date-header button {
+    margin-left: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.quote-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 0;
+    table-layout: fixed;
+}
+
+/* 🚨🚨🚨 일반 웹페이지 모드 너비 조정 🚨🚨🚨 */
+/* 💡 작업일 컬럼이 맨 앞에 있습니다. (총 9개 컬럼) */
+.quote-table thead tr th:nth-child(1), .quote-table tbody tr td:nth-child(1) { width: 15%; } /* 작업일 (맨 앞) */
+.quote-table thead tr th:nth-child(2), .quote-table tbody tr td:nth-child(2) { width: 15%; } /* 품명 */
+.quote-table thead tr th:nth-child(3), .quote-table tbody tr td:nth-child(3) { width: 10%; } /* 규격 */
+.quote-table thead tr th:nth-child(4), .quote-table tbody tr td:nth-child(4) { width: 10%; } /* 수량 */
+.quote-table thead tr th:nth-child(5), .quote-table tbody tr td:nth-child(5) { width: 5%; } /* 단위 */
+.quote-table thead tr th:nth-child(6), .quote-table tbody tr td:nth-child(6) { width: 15%; } /* 단가 */
+.quote-table thead tr th:nth-child(7), .quote-table tbody tr td:nth-child(7) { width: 17%; } /* 공급가액 */
+.quote-table thead tr th:nth-child(8), .quote-table tbody tr td:nth-child(8) { width: 8%; } /* 비고 */
+.quote-table thead tr th:nth-child(9), .quote-table tbody tr td:nth-child(9) { width: 5%; } /* X 버튼 최소 너비 */
+
+/* 💡 테이블 내부의 날짜 input 스타일 (작업일 컬럼용) */
+.group-date-cell input[type="date"] {
+    width: calc(100% - 5px);
+    padding: 1px 0;
+    box-sizing: border-box;
+    border: none;
+    font-size: 11px;
+    text-align: center;
+    background-color: #f7f7f7;
+}
+
+/* --- 추가: Input Number 스피너 숨기기 (웹킷/파이어폭스/IE) --- */
+.quote-table input[type=number]::-webkit-inner-spin-button, 
+.quote-table input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0;
+}
+.quote-table input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+}
+/* -------------------------------------------------------- */
+
+.quote-table th, .quote-table td {
+    border: 1px solid #ddd;
+    padding: 4px;
+    text-align: center;
+    line-height: 15px;
+}
+.quote-table thead th {
+    background-color: #e9e9e9;
+    font-weight: bold;
+}
+.quote-table input {
+    width: calc(100% - 8px);
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: 12px;
+}
+
+/* 화면용: 단가 입력과 항목별 공급가액을 수량 입력과 같은 폰트 크기로 고정 */
+.quote-table input.item-unit-price,
+.quote-table td.item-total {
+    font-size: 12px; /* 수량 입력(.item-quantity)의 기본 값과 동일 */
+    line-height: 15px;
+}
+
+/* 푸터의 공급가액/총액도 동일한 크기로 맞춤 */
+#supply-amount,
+.footer-table .total-value,
+.footer-table .final-value {
+    font-size: 12px;
+    line-height: 15px;
+}
+
+/* autocomplete suggestion list (for item-name) */
+.autocomplete-list {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    max-height: 220px;
+    overflow: auto;
+    z-index: 2000;
+    width: 320px;
+    font-size: 13px;
+}
+.autocomplete-item {
+    padding: 6px 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+.autocomplete-item:hover, .autocomplete-item.active {
+    background: #f0f8ff;
+}
+.autocomplete-item .meta {
+    color: #666;
+    font-size: 12px;
+}
+
+/* itemSets modal styling (simple) */
+#itemsets-modal .modal-box {
+    width: 720px;
+    max-height: 80%;
+    overflow: auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+#itemsets-modal table { width: 100%; border-collapse: collapse; }
+#itemsets-modal th, #itemsets-modal td { padding: 8px; border-bottom: 1px solid #eee; }
+.quote-table tbody td.item-total {
+    font-weight: bold;
+    background-color: #f9f9f9;
+}
+
+/* 💡 소계 행 스타일 */
+.subtotal-row td {
+    background-color: #f0f8ff; /* 연한 파란색 배경 */
+    font-weight: bold;
+    border-top: 2px solid #ccc !important;
+}
+.subtotal-row .subtotal-label {
+    text-align: right;
+    padding-right: 10px;
+}
+
+/* --- 품목 삭제 버튼 (내부) 스타일 --- */
+.quote-table button {
+    padding: 1px 3px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+/* 💡 테이블 아래 행 추가 버튼 스타일 */
+.add-item-row-btn {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px dashed #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-weight: bold;
+}
+.add-item-row-btn:hover {
+    background-color: #e0e0e0;
+}
+
+
+/* --- 푸터 테이블 (총액) --- */
+.footer-table {
+    width: 250px; 
+    float: right; 
+    border-collapse: collapse;
+    margin-top: 10px; 
+    font-size: 13px;
+    table-layout: fixed;
+}
+.footer-table td {
+    border: 1px solid #ddd;
+    padding: 4px 6px; 
+    line-height: 15px; 
+}
+.footer-table .total-label {
+    background-color: #e9e9e9;
+    font-weight: bold;
+    width: 60%;
+    text-align: left;
+}
+.footer-table .final-label {
+    background-color: #f7d2d2;
+}
+.footer-table .final-value {
+    background-color: #f7d2d2;
+    font-weight: bold;
+    color: red;
+}
+
+/* 3. 계좌정보는 최하단에 별도로 표기 (일반 모드) */
+.bank-info {
+    clear: both; 
+    text-align: center;
+    margin-top: 20px; 
+    padding-top: 5px;
+    font-size: 14px;
+    line-height: 15px; 
+}
+.bank-info input {
+    font-size: 13px;
+    text-align: center;
+}
+.bank-info input:focus {
+    outline: 2px solid #2196F3;
+    outline-offset: 2px;
+    border-color: #2196F3;
+}
+
+/* 계좌정보 박스 관련 스타일은 기본 상태 유지 (변경 취소 됨) */
+
+/* 버튼 간격 */
+#add-date-btn {
+    margin-top: 10px; 
+    margin-bottom: 20px; 
+}
+
+.print-tools {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    background: rgba(255,255,255,0.98);
+    padding: 8px 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    z-index: 3000;
+    flex-wrap: wrap;
+}
+.print-tools button {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+}
+.print-tools button:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* --- 💡 추가: 목록 페이지 스타일 --- */
+.container.list-mode {
+    padding: 20px;
+    min-height: 80vh; 
+}
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+}
+.list-header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+.new-quote-button {
+    padding: 12px 24px;
+    font-size: 15px;
+    background-color: #ffffff;
+    color: #333;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    letter-spacing: -0.2px;
+}
+.new-quote-button:hover {
+    background-color: #f8f9fa;
+    border-color: #2196F3;
+    color: #2196F3;
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.15);
+    transform: translateY(-1px);
+}
+.new-quote-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.list-controls {
+    margin: 15px 0 15px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+#quote-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 13px;
+}
+#quote-list-table th, #quote-list-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+#quote-list-table th {
+    background-color: #f0f0f0;
+    cursor: pointer;
+    position: relative;
+    padding-right: 20px;
+}
+#quote-list-table td.text-right {
+    text-align: right;
+    font-weight: bold;
+}
+
+/* 정렬 표시 아이콘 */
+#quote-list-table th.sortable.active::after {
+    content: "▼"; /* 기본 내림차순 */
+    position: absolute;
+    right: 5px;
+    font-size: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#quote-list-table th.sortable.active.ascending::after {
+    content: "▲"; /* 오름차순 */
+}
+#quote-list-table th.sortable:not(.active)::after {
+    content: "↕"; /* 미적용 시 */
+    opacity: 0.3;
+    position: absolute;
+    right: 5px;
+    font-size: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#quote-list-table button {
+    padding: 3px 8px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* 리스트 행 클릭 가능 스타일 */
+.quote-list-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    pointer-events: auto;
+}
+
+.quote-list-row:hover {
+    background-color: #f0f8ff !important;
+}
+
+.quote-list-row:hover td {
+    background-color: transparent;
+}
+
+.quote-list-row td {
+    pointer-events: auto;
+}
+
+/* 관리 버튼 컬럼 스타일 */
+.action-buttons {
+    text-align: center;
+}
+
+.action-buttons button {
+    cursor: pointer;
+}
+
+/* 목록 보기 모드에서는 기존 청구서 컴포넌트 숨김 */
+.container.list-mode > :not(#quote-list-view) {
+    display: none !important;
+}
+
+/* 인쇄 시 수신자 정보 숨김 */
+@media print {
+    /* 수신자 정보 전체 숨김 */
+    .recipient-info.hide-on-print {
+        display: none !important;
+    }
+    /* 수신자 정보 개별 필드 숨김 */
+    .recipient-field.hide-on-print {
+        display: none !important;
+    }
+    /* 수신자 정보가 숨겨질 때 공급자 정보가 전체 너비를 차지하도록 */
+    .info-boxes-wrapper:has(.recipient-info.hide-on-print) .supplier-info {
+        width: 100% !important;
+    }
+}
+
+/* 🚨🚨🚨 인쇄 최적화 CSS (테이블 너비 조정) 🚨🚨🚨 */
+@media print {
+    /* A4 페이지 및 마진 설정 */
+    @page {
+        size: A4;
+        margin: 6mm;
+    }
+    body {
+        margin: 0; 
+        padding: 0; 
+        width: 210mm; 
+        line-height: 12px !important; 
+    }
+    .container {
+        box-shadow: none;
+        border: none;
+        width: 198mm; 
+        max-width: none;
+        padding: 0; 
+        margin: 0 auto;
+    }
+    
+    /* 인쇄 시 버튼 및 외부 요소 숨김 */
+    .print-tools, #add-date-btn, .delete-date-btn, .delete-button-container, .delete-item-btn-internal, .add-item-row-btn {
+        display: none !important;
+    }
+    
+    /* 인쇄 시 VAT 옵션 input은 숨기고 텍스트는 유지 */
+    .vat-option {
+        display: none !important;
+    }
+
+    .summary-box {
+        margin-bottom: 3mm;
+    }
+    
+    /* 현장, 날짜, 수신자 정보 입력란 박스모양(테두리) 제거 */
+    .header-top-left input[type="text"],
+    .header-top-left input[type="date"],
+    .recipient-info input[type="text"] {
+        border: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* 테이블 스타일 (date-group 스타일 유지) */
+    .date-group {
+        margin-top: 3mm !important; 
+        margin-bottom: 3mm !important; 
+        break-inside: auto; 
+        border: none;
+    }
+    /* date-header는 버튼만 포함했으므로 인쇄 시 숨김 */
+    .date-header {
+        display: none !important;
+    }
+    
+    .quote-table {
+        font-size: 12px; 
+        table-layout: fixed; 
+        border-collapse: collapse;
+    }
+    
+    /* 테이블 헤더 반복 및 행 분할 방지 */
+    .quote-table thead {
+        display: table-header-group; 
+    }
+    .quote-table tbody tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    
+    .quote-table thead th, .quote-table tbody td {
+        padding: 1px 2px !important; 
+        line-height: 14px !important; 
+    }
+    
+    /* 💡 인쇄 시 날짜 input 제거 및 날짜 텍스트 (하나만) 표시 */
+    .group-date-cell input[type="date"] {
+        display: none !important;
+    }
+    .group-date-cell .date-display {
+        display: block !important;
+        background-color: #f0f0f0 !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        font-size: 10px;
+        font-weight: bold;
+        padding: 1px 2px;
+        line-height: 14px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* 💡 소계 행 스타일 (인쇄 시) */
+    .subtotal-row td {
+        background-color: #f0f8ff !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        font-weight: bold;
+        border-top: 1px solid #ddd !important;
+    }
+    
+    /* 품목 테이블 너비 조정 (수정된 너비 적용) */
+    .quote-table thead tr th:nth-child(1), .quote-table tbody tr td:nth-child(1) { width: 15%; } /* 작업일 */
+    .quote-table thead tr th:nth-child(2), .quote-table tbody tr td:nth-child(2) { width: 15%; } /* 품명 */
+    .quote-table thead tr th:nth-child(3), .quote-table tbody tr td:nth-child(3) { width: 10%; } /* 규격 */
+    .quote-table thead tr th:nth-child(4), .quote-table tbody tr td:nth-child(4) { width: 10%; } /* 수량 */
+    .quote-table thead tr th:nth-child(5), .quote-table tbody tr td:nth-child(5) { width: 5%; } /* 단위 */
+    .quote-table thead tr th:nth-child(6), .quote-table tbody tr td:nth-child(6) { width: 15%; } /* 단가 */
+    .quote-table thead tr th:nth-child(7), .quote-table tbody tr td:nth-child(7) { width: 17%; } /* 공급가액 */
+    .quote-table thead tr th:nth-child(8), .quote-table tbody tr td:nth-child(8) { width: 8%; } /* 비고 */
+    .quote-table thead tr th:nth-child(9), .quote-table tbody tr td:nth-child(9) { display: none; } /* X 삭제 버튼 숨김 */
+
+    /* 푸터 테이블 */
+    .footer-table {
+        margin-top: 5mm !important; 
+        page-break-before: avoid;
+        float: right; 
+        margin-left: auto;
+        margin-right: auto;
+        width: 250px;
+    }
+    .footer-table .final-label, .footer-table .final-value {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+    }
+    
+    /* 계좌 정보 */
+    .bank-info {
+        margin-top: 10mm !important; 
+        font-size: 12px;
+    }
+
+    /* 인쇄용: 계좌정보 입력란의 테두리/배경/그림자를 숨겨 박스가 보이지 않도록 함 */
+    .bank-info,
+    .bank-info p,
+    .bank-info input {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    /* 인쇄 시 목록 페이지 숨김 */
+    #quote-list-view {
+        display: none !important;
+    }
+}
+    /* 단가(입력)과 공급가액(푸터 및 항목 합계) 폰트 크기 일치 */
+    /* 기준: 인쇄용 테이블 기본 폰트 크기와 동일하게 유지 */
+    .quote-table input.item-unit-price,
+    .quote-table td.item-total {
+        font-size: 12px !important;
+        line-height: 15px !important;
+    }
+
+    /* 푸터의 공급가액 및 총액 표시도 동일한 크기로 맞춤 */
+    #supply-amount,
+    .footer-table .total-value,
+    .footer-table .final-value {
+        font-size: 12px !important;
+        line-height: 15px !important;
+    }

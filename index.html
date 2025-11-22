@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>날짜별 견적/청구서 시스템</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+    <!-- action toolbar (moved to bottom via CSS) -->
+
+    <div class="container">
+        <header>
+            <div class="header-center">
+                <h1>청 구 서</h1>
+            </div>
+            <div class="header-top-left">
+                <label id="field-site">현장명: <input type="text" value="현장명을 기재해주세요"></label>
+                <label id="field-date">작성일자: <input type="date" id="quote-date"></label>
+            </div>
+        </header>
+
+        <div class="info-boxes-wrapper">
+            <div class="info-box-style recipient-info">
+                <h3>수신자 정보</h3>
+                <p class="recipient-field" data-field="name">업체명: <input type="text" id="client-name" placeholder="수신 업체명"></p>
+                <p class="recipient-field" data-field="contact">담당자: <input type="text" id="client-contact" placeholder="담당자 성명"></p>
+                <p class="recipient-field" data-field="phone">연락처: <input type="text" id="client-phone" placeholder="연락처 (예: 010-0000-0000)"></p>
+            </div>
+            <div class="info-box-style supplier-info">
+                <h3>공급자 정보</h3>
+                <p>업체명: 윤슬조경농원</p>
+                <p>사업자번호: 760-63-00621</p>
+                <p>연락처: 010-4447-1870</p>
+            </div>
+        </div>
+
+        <div class="summary-box">
+            <div class="vat-option">
+                <label>
+                    <input type="radio" name="vat-mode" id="vat-exclusive" value="exclusive" checked>
+                    부가세 포함 (VAT 10% 추가)
+                </label>
+                <label>
+                    <input type="radio" name="vat-mode" id="vat-inclusive" value="inclusive">
+                    부가세 없음
+                </label>
+            </div>
+            <p class="summary-text single-line-total">
+                 <span id="final-total">0</span>원을 청구합니다.
+            </p>
+        </div>
+
+        <div id="quote-items-container">
+            </div>
+        
+        <button id="add-date-btn">➕ 새 작업일 그룹 추가</button>
+
+        <table class="footer-table">
+            <tbody>
+                <tr>
+                    <td class="total-label">공급가액 합계</td>
+                    <td class="total-value" id="supply-amount">0</td>
+                </tr>
+                <tr>
+                    <td class="total-label">부가세 (VAT 10%)</td>
+                    <td class="total-value" id="vat-amount">0</td>
+                </tr>
+                <tr>
+                    <td class="total-label final-label">총 청구 금액</td>
+                    <td class="final-value" id="grand-total">0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="bank-info">
+            <p>계좌 정보 
+                <input type="text" id="bank-name" placeholder="은행명" value="국민은행" style="width: 100px; padding: 2px; border: 1px solid #ddd; border-radius: 3px;">
+                <input type="text" id="bank-account" placeholder="계좌번호" value="123456-78-90123" style="width: 150px; padding: 2px; border: 1px solid #ddd; border-radius: 3px; margin: 0 5px;">
+                (예금주: <input type="text" id="account-holder" placeholder="예금주" value="홍길동" style="width: 100px; padding: 2px; border: 1px solid #ddd; border-radius: 3px;">)
+            </p>
+        </div>
+    </div>
+    <div class="print-tools">
+        <button id="save-quote-btn">✅ 청구서 저장</button>
+        <button id="view-list-btn">📋 저장 목록 보기</button>
+        <button id="print-btn">🖨️ 출력하기</button>
+        <button id="manage-itemsets-btn">⚙️ 항목관리</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
